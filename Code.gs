@@ -38,7 +38,8 @@ function doGet(event) {
       name: String(row[1] || ""),
       details: String(row[2] || ""),
       total: Number(row[3]) || 0,
-      status: String(row[8] || "已收到")
+      status: String(row[8] || "已收到"),
+      requestId: String(row[9] || "")
     }));
     return jsonp_(callback, { ok: true, orders });
   } catch (error) {

@@ -224,7 +224,48 @@ function showMessage(message, isError = false) {
   target.classList.toggle("error", isError);
 }
 
-function submitOrder(event) {
+function readOrders(endpoint) {
+  return new Promise((resolve, reject) => {
+    const callback = `teashopOrders${crypto.randomUUID().replaceAll("-", "")}`;
+    const script = document.createElement("script");
+    const timeout = window.setTimeout(() => {
+      delete window[callback];
+      script.remove();
+      reject(new Error("讀取 Google Sheet 確認送出狀態逾時。"));
+    }, 10000);
+    const cleanup = () => {
+      window.clearTimeout(timeout);
+      script.remove();
+      delete window[callback];
+    };
+    window[callback] = result => {
+      cleanup();
+      if (!result?.ok || !Array.isArray(result.orders)) {
+        reject(new Error(result?.error || "無法讀取 Google Sheet 訂單。"));
+        return;
+      }
+      resolve(result.orders);
+    };
+    script.onerror = () => {
+      cleanup();
+      reject(new Error("無法連線到 Google Sheet。"));
+    };
+    script.src = `${endpoint}${endpoint.includes("?") ? "&" : "?"}action=list&callback=${callback}`;
+    document.head.append(script);
+  });
+}
+
+async function waitForOrder(endpoint, requestId) {
+  const deadline = Date.now() + 15000;
+  while (Date.now() < deadline) {
+    const orders = await readOrders(endpoint);
+    if (orders.some(order => order.requestId === requestId)) return true;
+    await new Promise(resolve => window.setTimeout(resolve, 500));
+  }
+  return false;
+}
+
+async function submitOrder(event) {
   event.preventDefault();
   const configUrl = window.TEASHOP_CONFIG?.appsScriptUrl?.trim();
   if (!configUrl) {
@@ -248,11 +289,7 @@ function submitOrder(event) {
     total,
     cups
   };
-  const frame = document.querySelector("#submit-frame");
-  const postForm = document.querySelector("#submit-form");
-  postForm.action = configUrl;
-  postForm.replaceChildren();
-  Object.entries({
+  const parameters = new URLSearchParams({
     requestId: order.requestId,
     name: order.name,
     items: JSON.stringify(order.items),
@@ -262,27 +299,13 @@ function submitOrder(event) {
     note: order.note,
     total: String(order.total),
     cups: String(order.cups)
-  }).forEach(([name, value]) => {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = name;
-    input.value = value;
-    postForm.append(input);
   });
   const submitButton = form.querySelector(".submit-button");
   submitButton.disabled = true;
   showMessage("訂單送出中，請稍候…");
-  const timeout = window.setTimeout(() => {
-    window.removeEventListener("message", onResponse);
-    submitButton.disabled = false;
-    showMessage("尚未收到 Google Sheet 回應。請確認 Apps Script 部署為「任何人」可存取，再重新整理訂單頁確認是否已寫入，避免重複送出。", true);
-  }, 20000);
-  function onResponse(message) {
-    if (message.source !== frame.contentWindow || message.data?.requestId !== order.requestId) return;
-    window.clearTimeout(timeout);
-    window.removeEventListener("message", onResponse);
-    submitButton.disabled = false;
-    if (message.data.ok) {
+  try {
+    await fetch(configUrl, { method: "POST", mode: "no-cors", body: parameters });
+    if (await waitForOrder(configUrl, order.requestId)) {
       showMessage(`已送出 ${order.name} 的訂單，共 ${cups} 杯，合計 $${total}。`);
       form.reset();
       form.querySelectorAll("[data-quantity-for]").forEach(input => {
@@ -291,11 +314,13 @@ function submitOrder(event) {
       });
       calculateOrder();
     } else {
-      showMessage(`訂單未能寫入 Google Sheet：${message.data.error || "未知錯誤"}`, true);
+      showMessage("尚未能確認訂單已寫入 Google Sheet。請重新整理目前訂單頁確認，避免重複送出。", true);
     }
+  } catch (error) {
+    showMessage(`訂單送出或確認失敗：${error.message}。請重新整理目前訂單頁確認是否已寫入，避免重複送出。`, true);
+  } finally {
+    submitButton.disabled = false;
   }
-  window.addEventListener("message", onResponse);
-  postForm.submit();
 }
 
 renderMenu();
