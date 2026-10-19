@@ -4,10 +4,10 @@ const menu = [
     drinks: [
       { name: "芒果果粒茶", prices: [60, 70, 120] },
       { name: "芒芒百香", prices: [null, 85, 150] },
-      { name: "楊枝甘露（冰沙）", prices: [null, 80, 95] },
-      { name: "芒果厚奶（冰沙）", prices: [null, 85, 110] },
-      { name: "愛文芒果冰沙", prices: [null, 90, 115] },
-      { name: "金芒雪頂（冰沙）", prices: [null, 90, 115] }
+      { name: "楊枝甘露（冰沙）", prices: [80, 95, null] },
+      { name: "芒果厚奶（冰沙）", prices: [85, 110, null] },
+      { name: "愛文芒果冰沙", prices: [90, 115, null] },
+      { name: "金芒雪頂（冰沙）", prices: [90, 115, null] }
     ]
   },
   {
@@ -16,11 +16,11 @@ const menu = [
       { name: "光果茶（香橙／檸檬／柳橙）", prices: [null, 65, null] },
       { name: "鮮榨柳橙綠", prices: [60, 65, 120] },
       { name: "鮮榨百香綠", prices: [55, 60, 110] },
-      { name: "鮮榨百香檸檬", prices: [45, 55, 90] },
-      { name: "蜂蜜檸檬", prices: [55, 65, 120] },
+      { name: "鮮榨檸檬綠", prices: [45, 55, 90] },
+      { name: "蜂蜜檸檬", prices: [55, 65, 110] },
       { name: "紅心芭樂檸檬", prices: [null, 65, 120] },
       { name: "紅心芭樂綠茶", prices: [null, 65, 120] },
-      { name: "白葡萄青", prices: [55, 65, 110] }
+      { name: "白蔗青", prices: [55, 65, 110] }
     ]
   },
   {
@@ -41,21 +41,21 @@ const menu = [
       { name: "草莓雪奶", prices: [75, 95, null] },
       { name: "草莓雪頂", prices: [null, 95, null] },
       { name: "蜜桃雪頂", prices: [null, 95, null] },
-      { name: "橘哈啾啾", prices: [69, 89, null] }
+      { name: "橘哈啵啵", prices: [69, 89, null] }
     ]
   },
   {
     group: "熱搜・鮮果",
     drinks: [
-      { name: "荔枝紅茶", prices: [45, null, 90] },
-      { name: "荔枝小悠烏龍", prices: [55, null, 110] },
-      { name: "脆梅青", prices: [50, null, 100] },
-      { name: "葡萄果茶（內含寒天）", prices: [45, 55, 90] },
+      { name: "荔枝紅茶", prices: [null, 45, 90] },
+      { name: "荔枝小悠烏龍", prices: [null, 55, 110] },
+      { name: "脆梅青", prices: [null, 50, 100] },
+      { name: "葡萄果茶（內含葡萄果粒）", prices: [45, 55, 90] },
       { name: "蜜桃果粒茶", prices: [45, 55, 90] },
-      { name: "葡萄果粒啵啵（寒天／愛玉）", prices: [65, 75, 120] },
-      { name: "荔枝香檸（寒天／愛玉）", prices: [75, 75, 130] },
-      { name: "蜜桃香橙QQ（寒天／愛玉／珍珠）", prices: [70, 70, 130] },
-      { name: "芒果百香QQ（寒天／愛玉／珍珠）", prices: [70, 70, 130] }
+      { name: "葡萄果粒啵啵（寒天／愛玉）", prices: [null, 65, 120] },
+      { name: "荔枝香檸啵啵（寒天／愛玉）", prices: [null, 75, 130] },
+      { name: "蜜桃橙香QQ（寒天／愛玉／珍珠）", prices: [null, 70, 130] },
+      { name: "芒果百香QQ（寒天／愛玉／珍珠）", prices: [null, 70, 130] }
     ]
   },
   {
@@ -63,7 +63,7 @@ const menu = [
     drinks: [
       { name: "黃金蕎麥", prices: [null, 40, 80] },
       { name: "蕎麥青茶", prices: [null, 40, 80] },
-      { name: "蕎麥鮮奶", prices: [null, 65, null] },
+      { name: "蕎麥鮮奶", prices: [null, 65, 120] },
       { name: "慢熬冬瓜露", prices: [null, 30, 60] },
       { name: "冬瓜烏龍", prices: [null, 40, 80] },
       { name: "冬瓜檸檬", prices: [null, 55, null] }
@@ -86,7 +86,7 @@ const menu = [
       { name: "濃厚奶茶", prices: [null, 50, 90] },
       { name: "波霸珍珠濃厚奶茶", prices: [null, 60, 110] },
       { name: "白玉珍珠濃厚奶茶", prices: [null, 60, 110] },
-      { name: "蜜瓜奶綠", prices: [null, 79, null] }
+      { name: "蜜瓜輕奶綠", prices: [null, 79, null] }
     ]
   }
 ];

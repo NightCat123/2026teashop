@@ -6,6 +6,7 @@ function setupSheet() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   if (!spreadsheet) throw new Error("請先在目標 Google Sheet 的「擴充功能 > Apps Script」中建立此專案。");
   DriveApp.getFileById(spreadsheet.getId()).setName(SPREADSHEET_TITLE);
+  PropertiesService.getScriptProperties().setProperty("SPREADSHEET_ID", spreadsheet.getId());
   let sheet = spreadsheet.getSheetByName(ORDER_SHEET_NAME);
   if (!sheet) sheet = spreadsheet.insertSheet(ORDER_SHEET_NAME);
   if (sheet.getLastRow() === 0) {
@@ -79,7 +80,9 @@ function doPost(event) {
 }
 
 function getOrderSheet_() {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const spreadsheetId = PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID");
+  if (!spreadsheetId) throw new Error("請先在 Apps Script 執行 setupSheet。");
+  const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
   const sheet = spreadsheet && spreadsheet.getSheetByName(ORDER_SHEET_NAME);
   if (!sheet || sheet.getLastRow() === 0) throw new Error("找不到訂單工作表，請先在 Apps Script 執行 setupSheet。");
   return sheet;
