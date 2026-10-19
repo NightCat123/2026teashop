@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f1">
+  <title>班級飲料點餐｜MR.WISH</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="回到點餐首頁">
+      <span class="brand-mark">W</span>
+      <span><strong>班級飲料點餐</strong><small>MR.WISH × Very Miss Rabbit</small></span>
+    </a>
+    <nav aria-label="主要導覽">
+      <a class="nav-link active" href="index.html">開始點餐</a>
+      <a class="nav-link" href="orders.html">目前訂單</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="menu-row" aria-label="飲料菜單">
+      <img class="menu-image" src="menu.jpg" alt="MR.WISH 飲料完整菜單，包含品項、尺寸與價格">
+    </section>
+
+    <section class="order-row">
+      <form id="order-form" class="order-form">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">MAKE YOUR WISH</p>
+            <h1>挑一杯喜歡的吧！</h1>
+            <p class="intro">填寫姓名、選擇飲料與甜度冰量；每一項都可以調整數量。</p>
+          </div>
+          <a class="text-link" href="orders.html">查看大家點了什麼 →</a>
+        </div>
+
+        <label class="name-field" for="customer-name">
+          <span>你的姓名 <b>*</b></span>
+          <input id="customer-name" name="name" type="text" maxlength="40" autocomplete="name" placeholder="請輸入姓名" required>
+        </label>
+
+        <div id="menu-groups" class="menu-groups"></div>
+
+        <div class="form-options">
+          <label>甜度
+            <select name="sweetness">
+              <option value="正常糖">正常糖</option><option value="半糖">半糖</option><option value="微糖">微糖</option><option value="無糖">無糖</option>
+            </select>
+          </label>
+          <label>冰量
+            <select name="ice">
+              <option value="正常冰">正常冰</option><option value="少冰">少冰</option><option value="微冰">微冰</option><option value="一分冰">一分冰</option><option value="去冰">去冰</option>
+            </select>
+          </label>
+          <label class="note-field">備註（選填）
+            <input name="note" type="text" maxlength="120" placeholder="例如：不要吸管">
+          </label>
+        </div>
+
+        <fieldset class="add-ons">
+          <legend>加料（每杯計價）</legend>
+          <div id="add-on-options" class="add-on-options"></div>
+        </fieldset>
+
+        <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+        <button class="submit-button" type="submit">送出訂單 <span aria-hidden="true">→</span></button>
+      </form>
+
+      <aside class="price-panel" aria-label="訂單價格">
+        <div class="price-sticky">
+          <span class="price-icon" aria-hidden="true">🍋</span>
+          <p class="eyebrow">YOUR ORDER</p>
+          <h2>目前金額</h2>
+          <p id="price-total" class="price-total" aria-live="polite">$0</p>
+          <p id="price-count" class="price-count">尚未選擇飲料</p>
+          <div id="price-breakdown" class="price-breakdown">選好品項後，金額會即時更新。</div>
+          <p class="price-footnote">送出時會一併記錄此金額。</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <form id="submit-form" method="post" target="submit-frame" hidden></form>
+  <iframe id="submit-frame" name="submit-frame" title="訂單傳送結果" hidden></iframe>
+  <footer class="site-footer">清爽點一杯，開心一整天！<span>請確認姓名與品項後再送出</span></footer>
+</body>
+</html>

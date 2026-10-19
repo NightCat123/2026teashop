@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f1">
+  <title>目前訂單｜班級飲料點餐</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+  <script src="orders.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="回到點餐首頁">
+      <span class="brand-mark">W</span>
+      <span><strong>班級飲料點餐</strong><small>MR.WISH × Very Miss Rabbit</small></span>
+    </a>
+    <nav aria-label="主要導覽">
+      <a class="nav-link" href="index.html">開始點餐</a>
+      <a class="nav-link active" href="orders.html">目前訂單</a>
+    </nav>
+  </header>
+
+  <main class="page-shell status-page">
+    <section class="status-heading">
+      <div>
+        <p class="eyebrow">CLASS ORDER BOARD</p>
+        <h1>目前訂單</h1>
+        <p class="intro">看看同學們點了什麼；訂單狀態會依 Google Sheet 更新。</p>
+      </div>
+      <button id="refresh-orders" class="refresh-button" type="button">重新整理 ↻</button>
+    </section>
+    <p id="orders-message" class="orders-message" role="status" aria-live="polite"></p>
+    <div class="table-wrap">
+      <table class="orders-table">
+        <thead><tr><th>送出時間</th><th>姓名</th><th>飲料與選項</th><th>金額</th><th>狀態</th></tr></thead>
+        <tbody id="orders-list"></tbody>
+      </table>
+    </div>
+  </main>
+  <footer class="site-footer">想再點一杯？<a href="index.html">回到點餐頁 →</a></footer>
+</body>
+</html>
