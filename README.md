@@ -4,14 +4,17 @@
 
 ## Google Sheet 與 Apps Script 設定
 
-1. 在 Google Drive 建立試算表，檔名輸入 **2026手搖飲點餐記錄**。
-2. 在該試算表選擇「擴充功能 → Apps Script」，將本專案的 [`Code.gs`](./Code.gs) 全文貼到編輯器並儲存。
-3. 在 Apps Script 編輯器選擇 `setupSheet` 並按「執行」。首次執行時依畫面授權存取試算表；程式會建立「訂單」工作表、標題列並凍結標題。若表格已有資料但欄名不同，程式會停止而不覆寫。
-4. 選擇「部署 → 新增部署作業 → 網頁應用程式」：
+已建立 [2026手搖飲點餐記錄試算表](https://docs.google.com/spreadsheets/d/1bznTrwNuWa9Rk1L52qB_hPJXaYOv_M0UgxQvuEhVagU/edit)，並執行 `setupSheet` 建立「訂單」工作表與標題列。
+
+如需重建或更新 Apps Script：
+
+1. 在 Apps Script 編輯器貼上本專案的 [`Code.gs`](./Code.gs) 全文並儲存。
+2. 選擇 `setupSheet` 並按「執行」。程式會建立標題列並凍結標題；若表格已有資料但欄名不同，程式會停止而不覆寫。
+3. 選擇「部署 → 新增部署作業 → 網頁應用程式」：
    - 執行身分：**我**
    - 存取權：**任何人**
    - 按「部署」並完成授權，複製以 `/exec` 結尾的網頁應用程式網址。
-5. 將該網址填入 [`config.js`](./config.js) 的 `appsScriptUrl`，重新部署靜態網站。若之後修改 Apps Script，請建立新版部署。
+4. 若重新部署 Apps Script，將新的 `/exec` 網址填入 [`config.js`](./config.js) 的 `appsScriptUrl`，再推送以更新 GitHub Pages。
 
 Apps Script 會把訂單追加至「訂單」工作表，欄位包括時間、姓名、明細、總金額、杯數、甜度、冰量、備註、狀態與訂單編號。訂單頁讀取此工作表，並以最新送出的訂單優先顯示。
 

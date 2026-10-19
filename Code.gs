@@ -1,10 +1,10 @@
 const SPREADSHEET_TITLE = "2026手搖飲點餐記錄";
+const SPREADSHEET_ID = "1bznTrwNuWa9Rk1L52qB_hPJXaYOv_M0UgxQvuEhVagU";
 const ORDER_SHEET_NAME = "訂單";
 const HEADERS = ["送出時間", "姓名", "訂單明細", "總金額", "杯數", "甜度", "冰量", "備註", "狀態", "訂單編號"];
 
 function setupSheet() {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  if (!spreadsheet) throw new Error("請先在目標 Google Sheet 的「擴充功能 > Apps Script」中建立此專案。");
+  const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
   DriveApp.getFileById(spreadsheet.getId()).setName(SPREADSHEET_TITLE);
   PropertiesService.getScriptProperties().setProperty("SPREADSHEET_ID", spreadsheet.getId());
   let sheet = spreadsheet.getSheetByName(ORDER_SHEET_NAME);
